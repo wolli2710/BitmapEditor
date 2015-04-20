@@ -1,0 +1,6 @@
+== README
+
+* Ruby version: Ruby 2.0.0-p643
+
+install rspec for tests
+* gem install rspec
