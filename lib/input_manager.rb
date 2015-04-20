@@ -1,8 +1,11 @@
+require_relative "bitmap_image.rb"
+
 class InputManager
   @@running = true
   @user_input 
 
   def initialize
+    @bitmap_image = BitmapImage.new
     InputManager.run
   end
 
