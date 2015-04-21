@@ -2,7 +2,7 @@ require_relative 'notification'
 
 class BitmapImage
   include Notification
-  attr_accessor :pixels
+  attr_reader :pixels
 
   def create_pixels(rows, columns)
     @columns = columns.to_i
@@ -44,6 +44,7 @@ class BitmapImage
     end
   end
 
+  # Helper methods to check if an action can be performed
   def is_in_range?(rows, columns)
     result = false
     result = true if rows <= MAX_SIZE && columns <= MAX_SIZE
@@ -61,6 +62,7 @@ class BitmapImage
     (x1..x2).each{|x| (y1..y2).each{ |y| result = result && is_index_present?(x,y) } }
     result
   end
+
 
   private
   @pixels

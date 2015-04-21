@@ -8,7 +8,7 @@ describe BitmapImage do
     expect(@bitmap).to_not be_nil
   end
 
-  it "should have a pixel getter and setter" do
+  it "should have a method create_pixels" do
     expect(@bitmap.pixels).to be_nil
     @bitmap.create_pixels(3,3)
     expect(@bitmap.pixels).to_not be_nil

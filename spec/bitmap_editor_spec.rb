@@ -19,7 +19,7 @@ describe BitmapImage do
     expect(@bitmap_editor).to_not be_nil
   end
 
-  it "should have a pixel getter and setter" do
+  it "should have a method create_image and a pixel getter" do
     expect(@bitmap_editor.get_pixels).to be_nil
     @bitmap_editor.create_image(3,3)
     expect(@bitmap_editor.get_pixels).to_not be_nil
