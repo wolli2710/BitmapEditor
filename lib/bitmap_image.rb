@@ -21,6 +21,10 @@ class BitmapImage
     end
   end
 
+  def clear_pixels
+    create_pixels(@rows, @columns)
+  end
+
   private
   @pixels
   @columns

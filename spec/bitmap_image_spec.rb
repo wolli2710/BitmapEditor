@@ -46,7 +46,7 @@ describe BitmapImage do
 
   it "should have all pixels with O initialized" do
     @bitmap.create_pixels(3,3)
-    cnt = iterate_trough_pixels
+    cnt = iterate_trough_pixels()
     expect(cnt).to be(9)
   end
 
@@ -59,13 +59,22 @@ describe BitmapImage do
   it "should not color a pixel out of bounds" do
     @bitmap.create_pixels(3,3)
     @bitmap.set_pixel_colour(1,0,"A")
-    cnt = iterate_trough_pixels
+    cnt = iterate_trough_pixels()
     expect(cnt).to be(9)
   end
 
   it "should not set_pixel_colour without previous create_pixels" do
     @bitmap.set_pixel_colour(1,1,"A")
     expect(@bitmap.pixels).to be_nil
+  end
+
+  it "should provide method to clear colour" do
+    @bitmap.create_pixels(3,3)
+    @bitmap.set_pixel_colour(1,1,"A")
+    expect(@bitmap.pixels[1][1]).to match("A")
+    @bitmap.clear_pixels()
+    cnt = iterate_trough_pixels()
+    expect(cnt).to be(9)
   end
 
 end
