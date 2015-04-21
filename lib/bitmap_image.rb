@@ -62,6 +62,24 @@ class BitmapImage
     (x1..x2).each{|x| (y1..y2).each{ |y| @pixels[y][x] = colour } }
   end
 
+  def fill_region(x, y, colour)
+    x = x.to_i
+    y = y.to_i
+    if is_index_present?(x,y)
+      colour2 = @pixels[y][x]
+      fill_region_with_colour(colour, colour2)
+    else
+      puts "Error: your Image does not contain the Pixel at X:#{x} and Y:#{y}"
+    end
+  end
+
+  def fill_region_with_colour(colour, colour2)
+    (1..@rows).each do |x| 
+      (1..@columns).each do |y| 
+        @pixels[y][x] = colour if @pixels[y][x] == colour2
+      end
+    end
+  end
 
   private
   @pixels

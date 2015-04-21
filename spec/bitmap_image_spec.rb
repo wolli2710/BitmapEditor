@@ -4,12 +4,12 @@ describe BitmapImage do
   
   before(:each) {@bitmap = BitmapImage.new}
 
-  def iterate_trough_pixels
+  def iterate_trough_pixels(colour)
     cnt = 0
     @bitmap.pixels.each_pair do |key1,val1|
       @bitmap.pixels[key1].each_pair do |key2,val2|
         cnt += 1
-        expect(val2).to match('O')
+        expect(val2).to match(colour)
       end
     end
     return cnt
@@ -46,7 +46,7 @@ describe BitmapImage do
 
   it "should have all pixels with O initialized" do
     @bitmap.create_pixels(3,3)
-    cnt = iterate_trough_pixels()
+    cnt = iterate_trough_pixels('O')
     expect(cnt).to be(9)
   end
 
@@ -59,7 +59,7 @@ describe BitmapImage do
   it "should not color a pixel out of bounds" do
     @bitmap.create_pixels(3,3)
     @bitmap.set_pixel_colour(1,0,"A")
-    cnt = iterate_trough_pixels()
+    cnt = iterate_trough_pixels('O')
     expect(cnt).to be(9)
   end
 
@@ -73,7 +73,7 @@ describe BitmapImage do
     @bitmap.set_pixel_colour(1,1,"A")
     expect(@bitmap.pixels[1][1]).to match("A")
     @bitmap.clear_pixels()
-    cnt = iterate_trough_pixels()
+    cnt = iterate_trough_pixels('O')
     expect(cnt).to be(9)
   end
 
@@ -99,7 +99,6 @@ describe BitmapImage do
     expect(@bitmap.pixels[5][1]).to_not match("A")
   end
 
-
   it "should draw_horizontal_segment" do
     @bitmap.create_pixels(3,3)
     @bitmap.draw_horizontal_segment(1,2,2,"A")
@@ -114,4 +113,22 @@ describe BitmapImage do
     expect(@bitmap.pixels[5][1]).to_not match("A")
     expect(@bitmap.pixels[5][2]).to_not match("A")
   end
+
+
+  it "should fill_region" do
+    @bitmap.create_pixels(3,3)
+    @bitmap.draw_horizontal_segment(1,2,2,"B")
+    @bitmap.fill_region(2,2,"A")
+    expect(@bitmap.pixels[2][1]).to match("A")
+    expect(@bitmap.pixels[2][2]).to match("A")
+    expect(@bitmap.pixels[2][3]).to match("O")
+  end
+
+  it "should not fill_region" do
+    @bitmap.create_pixels(3,3)
+    @bitmap.fill_region(4,2,"A")
+    cnt = iterate_trough_pixels('O')
+    expect(cnt).to equal(9)
+  end
+
 end

@@ -31,6 +31,8 @@ class InputManager
       @bitmap_image.draw_vertical_segment(input_array[1],input_array[2],input_array[3], input_array[4])
     elsif(input_array[0] == 'H')
       @bitmap_image.draw_horizontal_segment(input_array[1],input_array[2],input_array[3], input_array[4])
+    elsif(input_array[0] == 'F')
+      @bitmap_image.fill_region(input_array[1],input_array[2],input_array[3])
     elsif(input_array[0] == 'C')
       @bitmap_image.clear_pixels()
     elsif(input_array[0] == 'S')
