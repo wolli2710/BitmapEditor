@@ -9,7 +9,7 @@ class BitmapImage
       @pixels = Hash.new{ |h,k| h[k] = Hash.new }
       (1..@columns).map{|i| (1..@rows).map{|j| @pixels[i][j] = 'O' } }
     else
-      puts "Error: your Image can't be bigger than #{MAX_SIZE}"
+      show_error("your Image can't be bigger than #{MAX_SIZE}")
     end
   end
 
@@ -17,7 +17,7 @@ class BitmapImage
     if is_index_present?(x,y)
       @pixels[y][x] = colour
     else
-      puts "Error: your Image does not contain the Pixel at X:#{x} and Y:#{y}"
+      show_error("your Image does not contain the Pixel at X:#{x} and Y:#{y}")
     end
   end
 
@@ -30,7 +30,7 @@ class BitmapImage
       colour2 = @pixels[y][x]
       fill_region_with_colour(colour, colour2)
     else
-      puts "Error: your Image does not contain the Pixel at X:#{x} and Y:#{y}"
+      show_error("your Image does not contain the Pixel at X:#{x} and Y:#{y}")
     end
   end
 

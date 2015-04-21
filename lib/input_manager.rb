@@ -1,6 +1,8 @@
-require_relative "bitmap_editor"
+require_relative 'bitmap_editor'
+require_relative 'notification'
 
 class InputManager
+  include Notification
   @@running = true
   @user_input 
 
@@ -16,7 +18,7 @@ class InputManager
       @user_input = STDIN.gets.chomp
       handle_user_input @user_input
     end
-    puts "Session ended"
+    show_message("Session ended")
   end
 
   def handle_user_input(user_input)
@@ -38,7 +40,7 @@ class InputManager
     elsif(input_array[0] == 'S')
       @bitmap_editor.show_pixels()
     else
-      print "Error: No command found!"
+      show_error("No command found!")
     end
   end
 

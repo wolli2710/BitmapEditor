@@ -1,7 +1,8 @@
 require_relative "bitmap_image"
+require_relative 'notification'
 
 class BitmapEditor
-  
+  include Notification
   attr_reader :pixels
 
   def initialize
@@ -43,7 +44,7 @@ class BitmapEditor
     if @bitmap_image.are_indices_present?(x,x,y1,y2)
       draw_segment(x, x, y1, y2, colour)
     else
-      puts "Error: your Image does not contain some of the coordinates for the segment you provided"
+      show_error("your Image does not contain some of the coordinates for the segment you provided")
     end
   end
 
@@ -54,7 +55,7 @@ class BitmapEditor
     if @bitmap_image.are_indices_present?(x1,x2,y,y)
       draw_segment(x1, x2, y, y, colour)
     else
-      puts "Error: your Image does not contain some of the coordinates for the segment you provided"
+      show_error("your Image does not contain some of the coordinates for the segment you provided")
     end
   end
 
@@ -62,12 +63,10 @@ class BitmapEditor
     (x1..x2).each{|x| (y1..y2).each{ |y| set_pixel_colour(x,y,colour) } }
   end
 
-
   def fill_region(x, y, colour)
     x = x.to_i
     y = y.to_i
     @bitmap_image.fill_region(x,y,colour)
   end
-
 
 end
