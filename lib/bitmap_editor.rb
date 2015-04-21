@@ -2,6 +2,7 @@ require_relative "bitmap_image"
 require_relative 'notification'
 
 class BitmapEditor
+  
   include Notification
   attr_reader :pixels
 

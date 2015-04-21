@@ -2,6 +2,7 @@ require_relative '../lib/input_manager'
 require_relative '../lib/notification'
 
 describe InputManager do
+  
   include Notification
   
   before(:each){@input_manager = InputManager.new}
