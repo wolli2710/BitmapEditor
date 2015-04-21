@@ -1,6 +1,9 @@
 require_relative 'bitmap_editor'
+require_relative 'parameter_check'
 
 module UserInput
+  
+  include ParameterCheck
 
   def handle_user_input(user_input)
     input_array = user_input.split(' ')
@@ -70,20 +73,6 @@ module UserInput
     else
       show_error("No command found!")
     end
-  end
-
-  def params_are_numbers?(*args)
-    result = true
-    args.map{|arg| result &= Integer(arg) rescue nil }
-    show_error("No command found!") unless result
-    result
-  end
-
-  def param_is_single_character?(arg)
-    result = true
-    result &= ( arg.size == 1 && arg == arg.upcase && String(arg) rescue nil )
-    show_error("No command found!") unless result
-    result
   end
 
 end
