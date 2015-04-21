@@ -83,4 +83,35 @@ describe BitmapImage do
     expect(@bitmap.show_pixels).to_not be_nil
   end
 
+  it "should draw_vertical_segment" do
+    @bitmap.create_pixels(3,3)
+    expect(@bitmap.pixels[1][1]).to_not match("A")
+    @bitmap.draw_vertical_segment(1,1,2,"A")
+    expect(@bitmap.pixels[1][1]).to match("A")
+    expect(@bitmap.pixels[2][1]).to match("A")
+    expect(@bitmap.pixels[1][3]).to match("O")
+  end
+
+  it "should not draw_vertical_segment" do
+    @bitmap.create_pixels(3,3)
+    @bitmap.draw_vertical_segment(1,2,5,"A")
+    expect(@bitmap.pixels[2][1]).to_not match("A")
+    expect(@bitmap.pixels[5][1]).to_not match("A")
+  end
+
+
+  it "should draw_horizontal_segment" do
+    @bitmap.create_pixels(3,3)
+    @bitmap.draw_horizontal_segment(1,2,2,"A")
+    expect(@bitmap.pixels[2][1]).to match("A")
+    expect(@bitmap.pixels[2][2]).to match("A")
+    expect(@bitmap.pixels[2][3]).to match("O")
+  end
+
+  it "should not draw_horizontal_segment" do
+    @bitmap.create_pixels(3,3)
+    @bitmap.draw_vertical_segment(1,2,5,"A")
+    expect(@bitmap.pixels[5][1]).to_not match("A")
+    expect(@bitmap.pixels[5][2]).to_not match("A")
+  end
 end

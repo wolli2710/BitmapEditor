@@ -36,10 +36,38 @@ class BitmapImage
     end
   end
 
+  def draw_vertical_segment(x, y1, y2, colour)
+    x = x.to_i
+    y1 = y1.to_i
+    y2 = y2.to_i
+    if are_indices_present?(x,x,y1,y2)
+      draw_segment(x, x, y1, y2, colour)
+    else
+      puts "Error: your Image does not contain some of the coordinates for the segment you provided"
+    end
+  end
+
+  def draw_horizontal_segment(x1, x2, y, colour)
+    x1 = x1.to_i
+    x2 = x2.to_i
+    y = y.to_i
+    if are_indices_present?(x1,x2,y,y)
+      draw_segment(x1, x2, y, y, colour)
+    else
+      puts "Error: your Image does not contain some of the coordinates for the segment you provided"
+    end
+  end
+
+  def draw_segment(x1, x2, y1, y2, colour)
+    (x1..x2).each{|x| (y1..y2).each{ |y| @pixels[y][x] = colour } }
+  end
+
+
   private
   @pixels
   @columns
   @rows
+
   MAX_SIZE = 250
 
   def is_in_range?(rows, columns)
@@ -53,4 +81,11 @@ class BitmapImage
     result = true if !@pixels.nil? && @pixels.has_key?(x) && @pixels[x].has_key?(y)
     result
   end
+
+  def are_indices_present?(x1,x2,y1,y2)
+    result = true
+    (x1..x2).each{|x| (y1..y2).each{ |y| result = result && is_index_present?(x,y) } }
+    result
+  end
+
 end
