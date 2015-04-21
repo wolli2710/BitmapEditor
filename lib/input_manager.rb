@@ -4,46 +4,101 @@ require_relative 'notification'
 class InputManager
   include Notification
   @@running = true
-  @user_input 
 
   def initialize
     @bitmap_editor = BitmapEditor.new
-    run
   end
 
-  protected
+  def create_image(input_array)
+    arg2 = input_array[1]
+    arg3 = input_array[2]
+    if input_array[0] == 'I' && params_are_numbers?(arg2, arg3)
+      @bitmap_editor.create_image(arg2, arg3)
+    else
+      show_error("No command found!")
+    end
+  end
+
+  def params_are_numbers?(*args)
+    result = true
+    args.map{|arg| result &= Integer(arg) rescue nil }
+    show_error("No command found!") unless result
+    result
+  end
+
+  def param_is_single_character?(arg)
+    result = true
+    result &= ( arg.size == 1 && arg == arg.upcase && String(arg) rescue nil )
+    show_error("No command found!") unless result
+    result
+  end
 
   def run
     while @@running do
-      @user_input = STDIN.gets.chomp
-      handle_user_input @user_input
+      user_input = STDIN.gets.chomp
+      handle_user_input user_input
     end
     show_message("Session ended")
   end
 
   def handle_user_input(user_input)
     input_array = user_input.split(' ')
-    if(input_array[0] == 'X')
-      @@running = false
-    elsif(input_array[0] == 'I')
-      @bitmap_editor.create_image(input_array[1],input_array[2])
-    elsif(input_array[0] == 'L')
-      @bitmap_editor.set_pixel_colour(input_array[1],input_array[2],input_array[3])
-    elsif(input_array[0] == 'V')
-      @bitmap_editor.draw_vertical_segment(input_array[1],input_array[2],input_array[3], input_array[4])
-    elsif(input_array[0] == 'H')
-      @bitmap_editor.draw_horizontal_segment(input_array[1],input_array[2],input_array[3], input_array[4])
-    elsif(input_array[0] == 'F')
-      @bitmap_editor.fill_region(input_array[1],input_array[2],input_array[3])
-    elsif(input_array[0] == 'C')
-      @bitmap_editor.clear_pixels()
-    elsif(input_array[0] == 'S')
-      @bitmap_editor.show_pixels()
+    case input_array.size
+    when 1
+      handle_single_character_input(input_array[0])
+    when 3
+      create_image(input_array)
+    when 4
+      handle_image_colouring(input_array)
+    when 5
+      handle_segmentational_image_colouring(input_array)
     else
       show_error("No command found!")
     end
   end
 
-end
+  def handle_single_character_input(user_input)
+    case user_input
+    when 'X'
+      @@running = false
+    when 'S'
+      @bitmap_editor.show_pixels()
+    when 'C'
+      @bitmap_editor.clear_pixels()
+    else
+      show_error("No command found!")
+    end
+  end
 
-InputManager.new
+  def handle_image_colouring(input_array)
+    arg2 = input_array[1]
+    arg3 = input_array[2]
+    arg4 = input_array[3]
+    if(params_are_numbers?(arg2,arg3) && param_is_single_character?(arg4))
+      if(input_array[0] == 'L')
+        @bitmap_editor.set_pixel_colour(arg2,arg3,arg4)
+      elsif(input_array[0] == 'F')
+        @bitmap_editor.fill_region(arg2,arg3,arg4)
+      else
+        show_error("No command found!")
+      end
+    end
+  end
+
+  def handle_segmentational_image_colouring(input_array)
+    arg2 = input_array[1]
+    arg3 = input_array[2]
+    arg4 = input_array[3]
+    arg5 = input_array[4]
+    if(params_are_numbers?(arg2,arg3,arg4) && param_is_single_character?(arg5))
+      if(input_array[0] == 'V')
+        @bitmap_editor.draw_vertical_segment(arg2,arg3,arg4, arg5)
+      elsif(input_array[0] == 'H')
+        @bitmap_editor.draw_horizontal_segment(arg2,arg3,arg4, arg5)
+      else
+        show_error("No command found!")
+      end
+    end
+  end
+
+end

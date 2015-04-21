@@ -1,5 +1,7 @@
-class BitmapImage
+require_relative 'notification'
 
+class BitmapImage
+  include Notification
   attr_accessor :pixels
 
   def create_pixels(rows, columns)
