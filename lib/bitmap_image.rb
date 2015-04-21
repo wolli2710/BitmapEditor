@@ -3,19 +3,21 @@ class BitmapImage
   attr_reader :pixels
 
   def create_pixels(rows, columns)
-    @columns = columns
-    @rows = rows
-    if is_in_range?(rows, columns)
+    @columns = columns.to_i
+    @rows = rows.to_i
+    if is_in_range?(@rows, @columns)
       @pixels = Hash.new{ |h,k| h[k] = Hash.new }
-      (1..rows).map{|i| (1..columns).map{|j| @pixels[i][j] = 'O' } }
+      (1..@columns).map{|i| (1..@rows).map{|j| @pixels[i][j] = 'O' } }
     else
       puts "Error: your Image can't be bigger than #{MAX_SIZE}"
     end
   end
 
   def set_pixel_colour(x,y,colour)
+    x = x.to_i
+    y = y.to_i
     if is_index_present?(x,y)
-      @pixels[x][y] = colour
+      @pixels[y][x] = colour
     else
       puts "Error: your Image does not contain the Pixel at X:#{x} and Y:#{y}"
     end
@@ -23,6 +25,15 @@ class BitmapImage
 
   def clear_pixels
     create_pixels(@rows, @columns)
+  end
+
+  def show_pixels
+    @pixels.each_pair do |key1,val1|
+      @pixels[key1].each_pair do |key2,val2|
+        print val2
+      end
+      puts ""
+    end
   end
 
   private

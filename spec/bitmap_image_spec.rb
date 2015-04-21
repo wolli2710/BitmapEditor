@@ -6,10 +6,10 @@ describe BitmapImage do
 
   def iterate_trough_pixels
     cnt = 0
-    @bitmap.pixels.each_pair do |k,v|
-      @bitmap.pixels[k].each_pair do |k1,v1|
+    @bitmap.pixels.each_pair do |key1,val1|
+      @bitmap.pixels[key1].each_pair do |key2,val2|
         cnt += 1
-        expect(v1).to match('O')
+        expect(val2).to match('O')
       end
     end
     return cnt
@@ -75,6 +75,12 @@ describe BitmapImage do
     @bitmap.clear_pixels()
     cnt = iterate_trough_pixels()
     expect(cnt).to be(9)
+  end
+
+  it "should provide method show pixels" do
+    @bitmap.create_pixels(3,3)
+    @bitmap.set_pixel_colour(1,1,"A")
+    expect(@bitmap.show_pixels).to_not be_nil
   end
 
 end

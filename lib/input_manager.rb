@@ -1,4 +1,4 @@
-require_relative "bitmap_image.rb"
+require_relative "bitmap_image"
 
 class InputManager
   @@running = true
@@ -6,25 +6,31 @@ class InputManager
 
   def initialize
     @bitmap_image = BitmapImage.new
-    InputManager.run
+    run
   end
 
   protected
 
-  def self.run
+  def run
     while @@running do
       @user_input = STDIN.gets.chomp
-      InputManager.handle_user_input @user_input
+      handle_user_input @user_input
     end
     puts "Session ended"
   end
 
-  def self.handle_user_input(user_input)
+  def handle_user_input(user_input)
     input_array = user_input.split(' ')
     if(input_array[0] == 'X')
       @@running = false
+    elsif(input_array[0] == 'I')
+      @bitmap_image.create_pixels(input_array[1],input_array[2])
     elsif(input_array[0] == 'L')
-      @bitmap.set_pixel_colour(input_array[1],input_array[2],input_array[3])
+      @bitmap_image.set_pixel_colour(input_array[1],input_array[2],input_array[3])
+    elsif(input_array[0] == 'C')
+      @bitmap_image.clear_pixels()
+    elsif(input_array[0] == 'S')
+      @bitmap_image.show_pixels()
     end
   end
 
