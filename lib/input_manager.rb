@@ -1,11 +1,11 @@
-require_relative "bitmap_image"
+require_relative "bitmap_editor"
 
 class InputManager
   @@running = true
   @user_input 
 
   def initialize
-    @bitmap_image = BitmapImage.new
+    @bitmap_editor = BitmapEditor.new
     run
   end
 
@@ -24,19 +24,21 @@ class InputManager
     if(input_array[0] == 'X')
       @@running = false
     elsif(input_array[0] == 'I')
-      @bitmap_image.create_pixels(input_array[1],input_array[2])
+      @bitmap_editor.create_image(input_array[1],input_array[2])
     elsif(input_array[0] == 'L')
-      @bitmap_image.set_pixel_colour(input_array[1],input_array[2],input_array[3])
+      @bitmap_editor.set_pixel_colour(input_array[1],input_array[2],input_array[3])
     elsif(input_array[0] == 'V')
-      @bitmap_image.draw_vertical_segment(input_array[1],input_array[2],input_array[3], input_array[4])
+      @bitmap_editor.draw_vertical_segment(input_array[1],input_array[2],input_array[3], input_array[4])
     elsif(input_array[0] == 'H')
-      @bitmap_image.draw_horizontal_segment(input_array[1],input_array[2],input_array[3], input_array[4])
+      @bitmap_editor.draw_horizontal_segment(input_array[1],input_array[2],input_array[3], input_array[4])
     elsif(input_array[0] == 'F')
-      @bitmap_image.fill_region(input_array[1],input_array[2],input_array[3])
+      @bitmap_editor.fill_region(input_array[1],input_array[2],input_array[3])
     elsif(input_array[0] == 'C')
-      @bitmap_image.clear_pixels()
+      @bitmap_editor.clear_pixels()
     elsif(input_array[0] == 'S')
-      @bitmap_image.show_pixels()
+      @bitmap_editor.show_pixels()
+    else
+      print "Error: No command found!"
     end
   end
 

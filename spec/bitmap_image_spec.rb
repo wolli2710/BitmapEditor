@@ -4,18 +4,7 @@ describe BitmapImage do
   
   before(:each) {@bitmap = BitmapImage.new}
 
-  def iterate_trough_pixels(colour)
-    cnt = 0
-    @bitmap.pixels.each_pair do |key1,val1|
-      @bitmap.pixels[key1].each_pair do |key2,val2|
-        cnt += 1
-        expect(val2).to match(colour)
-      end
-    end
-    return cnt
-  end
-
-  it "should create Bitmap object" do
+  it "should create BitmapImage object" do
     expect(@bitmap).to_not be_nil
   end
 
@@ -44,91 +33,10 @@ describe BitmapImage do
     expect(@bitmap.pixels[1][1]).to_not be_nil
   end
 
-  it "should have all pixels with O initialized" do
-    @bitmap.create_pixels(3,3)
-    cnt = iterate_trough_pixels('O')
-    expect(cnt).to be(9)
-  end
-
   it "should color a single pixel" do
     @bitmap.create_pixels(3,3)
     @bitmap.set_pixel_colour(1,1,"A")
     expect(@bitmap.pixels[1][1]).to match("A")
-  end
-
-  it "should not color a pixel out of bounds" do
-    @bitmap.create_pixels(3,3)
-    @bitmap.set_pixel_colour(1,0,"A")
-    cnt = iterate_trough_pixels('O')
-    expect(cnt).to be(9)
-  end
-
-  it "should not set_pixel_colour without previous create_pixels" do
-    @bitmap.set_pixel_colour(1,1,"A")
-    expect(@bitmap.pixels).to be_nil
-  end
-
-  it "should provide method to clear colour" do
-    @bitmap.create_pixels(3,3)
-    @bitmap.set_pixel_colour(1,1,"A")
-    expect(@bitmap.pixels[1][1]).to match("A")
-    @bitmap.clear_pixels()
-    cnt = iterate_trough_pixels('O')
-    expect(cnt).to be(9)
-  end
-
-  it "should provide method show pixels" do
-    @bitmap.create_pixels(3,3)
-    @bitmap.set_pixel_colour(1,1,"A")
-    expect(@bitmap.show_pixels).to_not be_nil
-  end
-
-  it "should draw_vertical_segment" do
-    @bitmap.create_pixels(3,3)
-    expect(@bitmap.pixels[1][1]).to_not match("A")
-    @bitmap.draw_vertical_segment(1,1,2,"A")
-    expect(@bitmap.pixels[1][1]).to match("A")
-    expect(@bitmap.pixels[2][1]).to match("A")
-    expect(@bitmap.pixels[1][3]).to match("O")
-  end
-
-  it "should not draw_vertical_segment" do
-    @bitmap.create_pixels(3,3)
-    @bitmap.draw_vertical_segment(1,2,5,"A")
-    expect(@bitmap.pixels[2][1]).to_not match("A")
-    expect(@bitmap.pixels[5][1]).to_not match("A")
-  end
-
-  it "should draw_horizontal_segment" do
-    @bitmap.create_pixels(3,3)
-    @bitmap.draw_horizontal_segment(1,2,2,"A")
-    expect(@bitmap.pixels[2][1]).to match("A")
-    expect(@bitmap.pixels[2][2]).to match("A")
-    expect(@bitmap.pixels[2][3]).to match("O")
-  end
-
-  it "should not draw_horizontal_segment" do
-    @bitmap.create_pixels(3,3)
-    @bitmap.draw_vertical_segment(1,2,5,"A")
-    expect(@bitmap.pixels[5][1]).to_not match("A")
-    expect(@bitmap.pixels[5][2]).to_not match("A")
-  end
-
-
-  it "should fill_region" do
-    @bitmap.create_pixels(3,3)
-    @bitmap.draw_horizontal_segment(1,2,2,"B")
-    @bitmap.fill_region(2,2,"A")
-    expect(@bitmap.pixels[2][1]).to match("A")
-    expect(@bitmap.pixels[2][2]).to match("A")
-    expect(@bitmap.pixels[2][3]).to match("O")
-  end
-
-  it "should not fill_region" do
-    @bitmap.create_pixels(3,3)
-    @bitmap.fill_region(4,2,"A")
-    cnt = iterate_trough_pixels('O')
-    expect(cnt).to equal(9)
   end
 
 end
