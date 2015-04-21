@@ -2,7 +2,7 @@ require_relative "bitmap_image"
 require_relative 'notification'
 
 class BitmapEditor
-  
+
   include Notification
   attr_reader :pixels
 
@@ -61,7 +61,7 @@ class BitmapEditor
   end
 
   def draw_segment(x1, x2, y1, y2, colour)
-    (x1..x2).each{|x| (y1..y2).each{ |y| set_pixel_colour(x,y,colour) } }
+    (x1..x2).map{|x| (y1..y2).map{ |y| set_pixel_colour(x,y,colour) } }
   end
 
   def fill_region(x, y, colour)

@@ -1,6 +1,7 @@
 require_relative 'notification'
 
 class BitmapImage
+
   include Notification
   attr_reader :pixels
 
@@ -59,7 +60,7 @@ class BitmapImage
 
   def are_indices_present?(x1,x2,y1,y2)
     result = true
-    (x1..x2).each{|x| (y1..y2).each{ |y| result = result && is_index_present?(x,y) } }
+    (x1..x2).map{|x| (y1..y2).map{ |y| result = result && is_index_present?(x,y) } }
     result
   end
 
