@@ -20,9 +20,11 @@ class InputManager
   end
 
   def self.handle_user_input(user_input)
-    instructions_array = user_input.split(' ')
-    if(instructions_array[0] == 'X')
+    input_array = user_input.split(' ')
+    if(input_array[0] == 'X')
       @@running = false
+    elsif(input_array[0] == 'L')
+      @bitmap.set_pixel_colour(input_array[1],input_array[2],input_array[3])
     end
   end
 

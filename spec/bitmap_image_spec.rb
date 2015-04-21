@@ -4,6 +4,17 @@ describe BitmapImage do
   
   before(:each) {@bitmap = BitmapImage.new}
 
+  def iterate_trough_pixels
+    cnt = 0
+    @bitmap.pixels.each_pair do |k,v|
+      @bitmap.pixels[k].each_pair do |k1,v1|
+        cnt += 1
+        expect(v1).to match('O')
+      end
+    end
+    return cnt
+  end
+
   it "should create Bitmap object" do
     expect(@bitmap).to_not be_nil
   end
@@ -25,7 +36,7 @@ describe BitmapImage do
     expect(@bitmap.pixels[1].size).to equal(250)
   end
 
-  it "should have no pixel index 0,0" do
+  it "should not have a pixel index 0,0" do
     @bitmap.create_pixels(3,3)
     expect(@bitmap.pixels[0][0]).to be_nil
     expect(@bitmap.pixels[1][0]).to be_nil
@@ -35,14 +46,26 @@ describe BitmapImage do
 
   it "should have all pixels with O initialized" do
     @bitmap.create_pixels(3,3)
-    cnt = 0
-    @bitmap.pixels.each_pair do |k,v|
-      @bitmap.pixels[k].each_pair do |k1,v1|
-        cnt += 1
-        expect(v1).to match('O')
-      end
-    end
+    cnt = iterate_trough_pixels
     expect(cnt).to be(9)
+  end
+
+  it "should color a single pixel" do
+    @bitmap.create_pixels(3,3)
+    @bitmap.set_pixel_colour(1,1,"A")
+    expect(@bitmap.pixels[1][1]).to match("A")
+  end
+
+  it "should not color a pixel out of bounds" do
+    @bitmap.create_pixels(3,3)
+    @bitmap.set_pixel_colour(1,0,"A")
+    cnt = iterate_trough_pixels
+    expect(cnt).to be(9)
+  end
+
+  it "should not set_pixel_colour without previous create_pixels" do
+    @bitmap.set_pixel_colour(1,1,"A")
+    expect(@bitmap.pixels).to be_nil
   end
 
 end
