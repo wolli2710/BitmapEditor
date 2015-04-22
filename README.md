@@ -1,5 +1,5 @@
-README
-==============
+== README
+
 * Ruby version: Ruby 2.0.0-p643
 
 install rspec for tests
@@ -8,8 +8,7 @@ install rspec for tests
 you can run the example with:
 * ./start.sh
 
-Commands
---------------
+=== Commands
 Finally there are 8 supported commands:
 
 * I M N - Create a new M x N image with all pixels coloured white (O).
@@ -22,11 +21,11 @@ Finally there are 8 supported commands:
 * X - Terminate the session
 * P - Print the currently used commands during this session
 
-Example
---------------
+=== Example
 In the example below, > represents input
 
 ```html
+<pre>
 > I 5 6 
 > L 2 3 A
 > S
@@ -55,4 +54,5 @@ V 2 3 4 W
 H 3 4 2 Z
 S
 P
+</pre>
 ```
