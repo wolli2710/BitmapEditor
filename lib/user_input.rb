@@ -29,6 +29,8 @@ module UserInput
       @bitmap_editor.show_pixels()
     when 'C'
       @bitmap_editor.clear_pixels()
+    when 'P'
+      print_session_commands
     else
       show_error("No command found!")
     end
